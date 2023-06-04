@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 6865759300686831815}
   - component: {fileID: 7274512479258099639}
   - component: {fileID: 8474922998739796509}
+  - component: {fileID: 2340082153240511615}
+  - component: {fileID: 2843694714653274413}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -110,6 +112,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3738962459755585157}
+  - {fileID: 2843694714653274413}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -141,7 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b913b430b474f75bef1ec99da2a7883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _newSprite: {fileID: 21300024, guid: 6fa7150d6e84a0f4d9122fda376c5e15, type: 3}
+  _enemySprite: {fileID: 21300024, guid: 6fa7150d6e84a0f4d9122fda376c5e15, type: 3}
+  _enemyAnimatorController: {fileID: 9100000, guid: 897135b8e9bac6e4b8969b255851e40d, type: 2}
 --- !u!143 &6865759300686831815
 CharacterController:
   m_ObjectHideFlags: 0
@@ -185,3 +189,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a16ba029104a2da14df219d48000e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &2340082153240511615
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4922636537058384011}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eeb49764c46cf134da98ee5a38e2a897, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2843694714653274413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4922636537058384011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsRunning
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
