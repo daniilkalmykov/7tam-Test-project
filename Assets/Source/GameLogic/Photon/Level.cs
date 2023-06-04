@@ -1,6 +1,5 @@
 using System.Collections;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 namespace GameLogic.Photon
@@ -15,17 +14,22 @@ namespace GameLogic.Photon
             _playerSpawner.SpawnPlayer();
 
             if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+            {
                 StartCoroutine(WaitTimeToStartGame());
+            }
         }
 
-        public override void OnPlayerEnteredRoom(Player newPlayer)
+        public override void OnPlayerEnteredRoom(global::Photon.Realtime.Player newPlayer)
         {
-            StartCoroutine(WaitTimeToStartGame());
+            if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+            {
+                StartCoroutine(WaitTimeToStartGame());
+            }
         }
 
         private void StartGame()
         {
-            print("StartGame");
+            print("start");
         }
 
         private IEnumerator WaitTimeToStartGame()
