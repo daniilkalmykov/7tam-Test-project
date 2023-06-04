@@ -1,3 +1,4 @@
+using GameLogic.Photon;
 using Photon;
 using TMPro;
 using UnityEngine;

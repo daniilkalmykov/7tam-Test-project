@@ -4,7 +4,7 @@ using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Photon
+namespace GameLogic.Photon
 {
     public sealed class LobbyConnector : MonoBehaviourPunCallbacks
     {
