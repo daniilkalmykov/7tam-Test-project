@@ -4,32 +4,31 @@ using UnityEngine;
 
 namespace Player
 {
-    [RequireComponent(typeof(PhotonView))]
-    [RequireComponent(typeof(CharacterController), typeof(SpriteRenderer),typeof(Animator))]
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(PhotonView), typeof(SpriteRenderer),typeof(Animator))]
     public sealed class PlayerMovement : MonoBehaviour, IPunObservable
     {
         [SerializeField] private float _speed;
         
-        private CharacterController _characterController;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private PhotonView _photonView;
+        private Rigidbody2D _rigidbody;
         
         private void Awake()
         {
+            _rigidbody = GetComponent<Rigidbody2D>();
             _photonView = GetComponent<PhotonView>();
             _animator = GetComponent<Animator>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _characterController = GetComponent<CharacterController>();
             
             AddObservable();
         }
 
         public void Move(float xDirection, float yDirection)
         {
-            var direction = new Vector2(xDirection, yDirection) * (_speed * Time.deltaTime);
-            _characterController.Move(direction);
-
+            var direction = new Vector2(xDirection, yDirection) * _speed;
+            
             _spriteRenderer.flipX = xDirection switch
             {
                 > 0 => false,
@@ -37,6 +36,8 @@ namespace Player
                 _ => _spriteRenderer.flipX
             };
 
+            _rigidbody.velocity = direction;
+            
             _animator.SetBool(AnimatorParameters.IsRunning, direction.magnitude > 0);
         }
 

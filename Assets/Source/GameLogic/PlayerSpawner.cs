@@ -4,9 +4,9 @@ using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace GameLogic.Photon
+namespace GameLogic
 {
-    public sealed class PlayerSpawner : MonoBehaviourPunCallbacks
+    public sealed class PlayerSpawner : MonoBehaviour
     {
         [SerializeField] private Player.Player _prefab;
         [SerializeField] private int _minXPosition;
@@ -14,6 +14,7 @@ namespace GameLogic.Photon
         [SerializeField] private int _minYPosition;
         [SerializeField] private int _maxYPosition;
         [SerializeField] private Joystick _joystick;
+        [SerializeField] private ObjectsInitializer _objectsInitializer;
 
         public void SpawnPlayer()
         {
@@ -25,6 +26,7 @@ namespace GameLogic.Photon
             var player = PhotonNetwork.Instantiate(_prefab.name, playerPosition, Quaternion.identity);
 
             InitPlayer(player);
+            _objectsInitializer.InitObjects(player);
         }
 
         private void InitPlayer(GameObject player)
