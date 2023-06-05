@@ -303,6 +303,8 @@ MonoBehaviour:
   _playerSpawner: {fileID: 1591852409}
   _delayToStartGame: 3
   _coinsSpawner: {fileID: 1792719403}
+  _joystick: {fileID: 1301195291}
+  _shootingButton: {fileID: 1909400525}
 --- !u!1 &191895676
 GameObject:
   m_ObjectHideFlags: 0
