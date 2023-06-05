@@ -1,5 +1,7 @@
 using System;
+using Photon.Pun;
 using Player;
+using UI;
 using UI.Bars;
 using UI.Buttons;
 using UnityEngine;
@@ -10,6 +12,7 @@ namespace GameLogic
     {
         [SerializeField] private ShootingButton _shootingButton;
         [SerializeField] private HealthBar _healthBar;
+        [SerializeField] private EndScreen _endScreen;
 
         public void InitObjects(GameObject player)
         {
@@ -18,9 +21,10 @@ namespace GameLogic
 
             if (player.TryGetComponent(out PlayerHealth playerHealth) == false)
                 throw new ArgumentNullException();
-            
+
             _shootingButton.Init(playerShooting);
             _healthBar.Init(playerHealth);
+            _endScreen.Init(playerHealth);
         }
     }
 }
