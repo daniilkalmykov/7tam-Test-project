@@ -4,18 +4,22 @@ using UnityEngine;
 
 namespace Infrastructure
 {
-    [RequireComponent(typeof(PhotonView))]
-    public sealed class Bullet : MonoBehaviour
+    [RequireComponent(typeof(PhotonView), typeof(SpriteRenderer))]
+    public sealed class Bullet : MonoBehaviour, IPunObservable
     {
         [SerializeField] private int _damage;
         [SerializeField] private float _speed;
 
         private Vector3 _target;
         private PhotonView _photonView;
+        private SpriteRenderer _spriteRenderer;
 
         private void Awake()
         {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             _photonView = GetComponent<PhotonView>();
+            
+            AddObservable();
         }
 
         [PunRPC]
@@ -45,6 +49,20 @@ namespace Infrastructure
         public void Init(Vector2 target)
         {
             _target = target;
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+                stream.SendNext(_spriteRenderer.flipX);
+            else
+                _spriteRenderer.flipX = (bool)stream.ReceiveNext();
+        }
+        
+        private void AddObservable()
+        {
+            if (_photonView.ObservedComponents.Contains(this) == false)
+                _photonView.ObservedComponents.Add(this);
         }
     }
 }
