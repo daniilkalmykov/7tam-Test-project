@@ -22,9 +22,12 @@ namespace GameLogic
             if (player.TryGetComponent(out PlayerHealth playerHealth) == false)
                 throw new ArgumentNullException();
 
+            if (player.TryGetComponent(out PlayerCoinsCollector playerCoinsCollector) == false)
+                throw new ArgumentNullException();
+                
             _shootingButton.Init(playerShooting);
             _healthBar.Init(playerHealth);
-            _endScreen.Init(playerHealth);
+            _endScreen.Init(playerHealth, playerCoinsCollector);
         }
     }
 }

@@ -5,10 +5,11 @@ using UnityEngine;
 namespace Player
 {
     [RequireComponent(typeof(PhotonView))]
-    public sealed class PlayerWallet : MonoBehaviour, IPunObservable
+    public sealed class PlayerCoinsCollector : MonoBehaviour, IPunObservable
     {
         private PhotonView _photonView;
-        private int _coinsCount;
+        
+        public int CoinsCount { get; private set; }
 
         private void Awake()
         {
@@ -22,7 +23,7 @@ namespace Player
             if (other.TryGetComponent(out Coin coin) == false) 
                 return;
             
-            _coinsCount++;
+            CoinsCount++;
             
             PhotonNetwork.Destroy(coin.gameObject);
         }
@@ -30,9 +31,9 @@ namespace Player
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
-                stream.SendNext(_coinsCount);
+                stream.SendNext(CoinsCount);
             else
-                _coinsCount = (int)stream.ReceiveNext();
+                CoinsCount = (int)stream.ReceiveNext();
         }
         
         private void AddObservable()

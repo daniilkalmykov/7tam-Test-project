@@ -10,11 +10,14 @@ namespace UI
     public sealed class EndScreen : MonoBehaviour, IPunObservable
     {
         [SerializeField] private TMP_Text _playerName;
-        [SerializeField] private RectTransform _spawnPoint;
+        [SerializeField] private TMP_Text _coinsText;
+        [SerializeField] private RectTransform _playerNickNameSpawnPoint;
+        [SerializeField] private RectTransform _coinsTextSpawnPoint;
 
         private PlayerHealth _player;
         private PhotonView _photonView;
         private CanvasGroup _canvasGroup;
+        private PlayerCoinsCollector _playerCoinsCollector;
 
         private void Awake()
         {
@@ -34,9 +37,10 @@ namespace UI
             ChangeVisibility(false);
         }
 
-        public void Init(PlayerHealth player)
+        public void Init(PlayerHealth player, PlayerCoinsCollector playerCoinsCollector)
         {
             _player = player;
+            _playerCoinsCollector = playerCoinsCollector;
 
             _player.Died += OnDied;
         }
@@ -61,14 +65,34 @@ namespace UI
         {
             ChangeVisibility(true);
 
-            var nickName = PhotonNetwork.Instantiate(_playerName.name, Vector3.zero, Quaternion.identity).GetComponent<TMP_Text>();
+            SetPlayerNickName();
+            SetCoinsText();
+        }
 
-            if (nickName.TryGetComponent(out PhotonView photonView) == false)
+        private void SetPlayerNickName()
+        {
+            SetText(_playerName, _playerNickNameSpawnPoint, PhotonNetwork.NickName);
+        }
+
+        private void SetCoinsText()
+        {
+            SetText(_coinsText, _coinsTextSpawnPoint, _playerCoinsCollector.CoinsCount.ToString());
+        }
+
+        private void SetText(TMP_Text tmpText, Transform spawnPoint, string text)
+        {
+            var newText = PhotonNetwork.Instantiate(tmpText.name, Vector3.zero, Quaternion.identity)
+                .GetComponent<TMP_Text>();
+            
+            if (newText.TryGetComponent(out PhotonView photonView) == false)
                 throw new ArgumentNullException();
 
-            photonView.transform.SetParent(transform);
-            nickName.text = PhotonNetwork.NickName;
-            photonView.transform.position = _spawnPoint.position;
+            var photonViewTransform = photonView.transform;
+            
+            photonViewTransform.SetParent(transform);
+            photonViewTransform.position = spawnPoint.position;
+            
+            newText.text = text;
         }
 
         private void ChangeVisibility(bool state)
