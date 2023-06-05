@@ -12,6 +12,9 @@ namespace Player
         private int _currentHealth;
         private PhotonView _photonView;
 
+        public event Action<int, int> Changed;
+        public event Action Died;
+
         private void Awake()
         {
             _photonView = GetComponent<PhotonView>();
@@ -30,9 +33,13 @@ namespace Player
                 throw new ArgumentNullException();
 
             _currentHealth -= damage;
+            Changed?.Invoke(_currentHealth, _maxHealth);
 
-            if (_currentHealth <= 0)
-                _photonView.gameObject.SetActive(false);
+            if (_currentHealth > 0)
+                return;
+            
+            Died?.Invoke();
+            _photonView.gameObject.SetActive(false);
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
