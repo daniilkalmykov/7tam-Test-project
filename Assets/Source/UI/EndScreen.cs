@@ -10,6 +10,7 @@ namespace UI
     public sealed class EndScreen : MonoBehaviour, IPunObservable
     {
         [SerializeField] private TMP_Text _playerName;
+        [SerializeField] private RectTransform _spawnPoint;
 
         private PlayerHealth _player;
         private PhotonView _photonView;
@@ -67,6 +68,7 @@ namespace UI
 
             photonView.transform.SetParent(transform);
             nickName.text = PhotonNetwork.NickName;
+            photonView.transform.position = _spawnPoint.position;
         }
 
         private void ChangeVisibility(bool state)
