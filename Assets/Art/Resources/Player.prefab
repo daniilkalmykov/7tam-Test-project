@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 7531648429860082924}
   - component: {fileID: 2796776981010952000}
   - component: {fileID: 7425773170301293723}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,6 +152,7 @@ MonoBehaviour:
   - {fileID: 2843694714653274413}
   - {fileID: 7531648429860082924}
   - {fileID: 2796776981010952000}
+  - {fileID: 7425773170301293723}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

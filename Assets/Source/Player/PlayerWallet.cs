@@ -22,7 +22,6 @@ namespace Player
             if (other.TryGetComponent(out Coin coin) == false) 
                 return;
             
-            print("ALFLALFA");
             _coinsCount++;
             
             PhotonNetwork.Destroy(coin.gameObject);
